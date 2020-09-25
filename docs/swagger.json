@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server Petstore server.",
+        "description": "This is a sample server Example server.",
         "title": "Swagger Example API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
@@ -35,7 +35,7 @@
                 "tags": [
                     "home"
                 ],
-                "summary": "Get welcome message",
+                "summary": "Get welcome message, get token before trying this route",
                 "responses": {
                     "200": {
                         "description": "OK",

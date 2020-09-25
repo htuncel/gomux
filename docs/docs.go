@@ -50,7 +50,7 @@ var doc = `{
                 "tags": [
                     "home"
                 ],
-                "summary": "Get welcome message",
+                "summary": "Get welcome message, get token before trying this route",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -425,7 +425,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "/api/v1",
 	Schemes:     []string{},
 	Title:       "Swagger Example API",
-	Description: "This is a sample server Petstore server.",
+	Description: "This is a sample server Example server.",
 }
 
 type s struct{}

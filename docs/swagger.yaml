@@ -32,7 +32,7 @@ info:
     email: support@swagger.io
     name: API Support
     url: http://www.swagger.io/support
-  description: This is a sample server Petstore server.
+  description: This is a sample server Example server.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -62,7 +62,7 @@ paths:
             type: object
       security:
       - ApiKeyAuth: []
-      summary: Get welcome message
+      summary: Get welcome message, get token before trying this route
       tags:
       - home
   /books:
