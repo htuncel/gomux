@@ -15,7 +15,7 @@ import (
 
 // @title Swagger Example API
 // @version 1.0
-// @description This is a sample server Petstore server.
+// @description This is a sample server Example server.
 // @termsOfService http://swagger.io/terms/
 
 // @contact.name API Support
@@ -68,7 +68,7 @@ func setupRoutes(router *mux.Router) {
 }
 
 // homeHandler godoc
-// @Summary Get welcome message
+// @Summary Get welcome message, get token before trying this route
 // @Description Get welcome message
 // @Tags home
 // @Accept json
