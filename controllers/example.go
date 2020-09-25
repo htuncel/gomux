@@ -28,8 +28,8 @@ func NewExampleController() *ExampleController {
 // @Summary Get token
 // @Description Get token
 // @Tags token
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Success 200 {object} map[string]interface{}
 // @Failure 400 {object} map[string]string
 // @Router /example/token [get]
@@ -61,15 +61,15 @@ func (e *ExampleController) TokenHandler(w http.ResponseWriter, r *http.Request)
 }
 
 // MultipleFileUpload godoc
-// @Summary	Upload multiple file
+// @Summary	Upload multiple file, []file giving error will fix later, single file for now
 // @Description	Upload multiple file
-// @Tags		file
-// @Accept		multipart/form-data
-// @Produce		json
-// @Param		files	formData[]file true  "files"
-// @Success		200		{object}map[string]string
-// @Failure		400		{object}map[string]string
-// @Router		/example/multifile [post]
+// @Tags file
+// @Accept multipart/form-data
+// @Produce json
+// @Param files formData file true "files"
+// @Success 200 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Router /example/multifile [post]
 func (e *ExampleController) MultipleFileUpload(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	// 32MB is the default used by FormFile

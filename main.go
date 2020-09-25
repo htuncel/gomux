@@ -71,8 +71,8 @@ func setupRoutes(router *mux.Router) {
 // @Summary Get welcome message
 // @Description Get welcome message
 // @Tags home
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Header 200 {string} Token "qwerty"
 // @Success 200 {object} map[string]string
 // @Failure 400 {object} map[string]string

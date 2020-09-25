@@ -292,7 +292,7 @@ var doc = `{
                 "tags": [
                     "file"
                 ],
-                "summary": "Upload multiple file",
+                "summary": "Upload multiple file, []file giving error will fix later, single file for now",
                 "parameters": [
                     {
                         "type": "file",

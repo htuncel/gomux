@@ -228,7 +228,7 @@ paths:
             additionalProperties:
               type: string
             type: object
-      summary: Upload multiple file
+      summary: Upload multiple file, []file giving error will fix later, single file for now
       tags:
       - file
   /example/token:

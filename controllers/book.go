@@ -32,8 +32,8 @@ func NewBookController() *BookController {
 // @Summary Get details of all books
 // @Description Get details of all books
 // @Tags books
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Success 200 {array} models.Book
 // @Failure 400 {object} map[string]string
 // @Router /books [get]
@@ -50,8 +50,8 @@ func (b *BookController) FindBooks(w http.ResponseWriter, r *http.Request) {
 // @Summary Get detail of book with given id
 // @Description Get detail of book with given id
 // @Tags books
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Param id path string true "id of the book"
 // @Success 200 {object} models.Book
 // @Failure 400 {object} map[string]string
@@ -79,8 +79,8 @@ func (b *BookController) FindBook(w http.ResponseWriter, r *http.Request) {
 // @Summary Create a new book
 // @Description Create a new book with the input paylod
 // @Tags books
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Param book body models.CreateBookInput true "Create book"
 // @Success 200 {object} models.CreateBookInput
 // @Failure 400 {object} map[string]string
@@ -115,8 +115,8 @@ func (b *BookController) CreateBook(w http.ResponseWriter, r *http.Request) {
 // @Summary Update a book
 // @Description Update a book with the input paylod
 // @Tags books
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Param id path string true "id of the book"
 // @Param book body models.UpdateBookInput true "Update book"
 // @Success 200 {object} models.UpdateBookInput
@@ -161,8 +161,8 @@ func (b *BookController) UpdateBook(w http.ResponseWriter, r *http.Request) {
 // @Summary Delete a book
 // @Description Delete a book with the input paylod
 // @Tags books
-// @Accept  json
-// @Produce  json
+// @Accept json
+// @Produce json
 // @Param id path string true "id of the book"
 // @Success 200 {object} map[string]bool
 // @Failure 400 {object} map[string]string
