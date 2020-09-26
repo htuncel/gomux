@@ -45,6 +45,12 @@ paths:
       consumes:
       - application/json
       description: Get welcome message
+      parameters:
+      - description: headkey
+        in: header
+        name: headkey
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -250,7 +256,7 @@ paths:
             additionalProperties:
               type: string
             type: object
-      summary: Get token
+      summary: Get token, todo user info to sign process
       tags:
       - token
 securityDefinitions:

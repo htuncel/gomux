@@ -31,8 +31,16 @@ import (
 // @name Authorization
 // @BasePath /api/v1
 func main() {
+	hub := newHub()
+	go hub.run()
+
 	router := mux.NewRouter()
 	router.PathPrefix("/documentation/").Handler(httpSwagger.WrapHandler)
+
+	router.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		serveWs(hub, w, r)
+	})
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/views/")))
 
 	router.Use(loggingMiddleware)
 	setupRoutes(router)
@@ -81,8 +89,22 @@ func setupRoutes(router *mux.Router) {
 // @Failure 400 {object} map[string]string
 // @Router /auth [get]
 // @Security ApiKeyAuth
+// @param headkey header string true "headkey"
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"data": "Hello World"})
+	json.NewEncoder(w).Encode(map[string]string{"data": "Hello World", "header": r.Header.Get("headkey")})
+}
+
+func serveHome(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
+	if r.URL.Path != "/" {
+		http.Error(w, "Not found", http.StatusNotFound)
+		return
+	}
+	if r.Method != "GET" {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	http.ServeFile(w, r, "home.html")
 }

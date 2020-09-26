@@ -51,6 +51,15 @@ var doc = `{
                     "home"
                 ],
                 "summary": "Get welcome message, get token before trying this route",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "headkey",
+                        "name": "headkey",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -336,7 +345,7 @@ var doc = `{
                 "tags": [
                     "token"
                 ],
-                "summary": "Get token",
+                "summary": "Get token, todo user info to sign process",
                 "responses": {
                     "200": {
                         "description": "OK",

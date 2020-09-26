@@ -12,7 +12,7 @@ import (
 
 func loggingMiddleware(next http.Handler) http.Handler {
 	t := time.Now().Format("02-01-2006")
-	file, errFile := os.OpenFile(t+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	file, errFile := os.OpenFile("logs/"+t+".log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if errFile != nil {
 		log.Println("Error opening .log file")
 	}
