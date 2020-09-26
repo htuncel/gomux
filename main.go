@@ -33,7 +33,10 @@ import (
 func main() {
 	router := mux.NewRouter()
 	router.PathPrefix("/documentation/").Handler(httpSwagger.WrapHandler)
+
+	router.Use(loggingMiddleware)
 	setupRoutes(router)
+
 	log.Fatal(
 		http.ListenAndServe(
 			":8080",

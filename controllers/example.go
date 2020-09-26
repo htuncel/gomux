@@ -25,7 +25,7 @@ func NewExampleController() *ExampleController {
 }
 
 // TokenHandler godoc
-// @Summary Get token
+// @Summary Get token, todo user info to sign process
 // @Description Get token
 // @Tags token
 // @Accept json
