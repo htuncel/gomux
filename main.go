@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/handlers"
@@ -12,6 +13,10 @@ import (
 
 	"main/controllers"
 	_ "main/docs"
+)
+
+var (
+	hub *Hub
 )
 
 // @title Swagger Example API
@@ -32,7 +37,7 @@ import (
 // @name Authorization
 // @BasePath /api/v1
 func main() {
-	hub := newHub()
+	hub = newHub()
 	go hub.run()
 
 	router := mux.NewRouter()
@@ -45,7 +50,6 @@ func main() {
 	fs := http.FileServer(http.Dir("./public/views/"))
 	router.PathPrefix("/chat/").Handler(http.StripPrefix("/chat/", fs))
 
-	router.Use(loggingMiddleware)
 	setupRoutes(router)
 
 	srv := &http.Server{
@@ -67,6 +71,8 @@ func setupRoutes(router *mux.Router) {
 	exampleController := controllers.NewExampleController()
 
 	v1 := router.PathPrefix("/api/v1").Subrouter()
+
+	v1.Use(loggingMiddleware)
 
 	example := v1.PathPrefix("/example").Subrouter()
 	example.HandleFunc("/token", exampleController.TokenHandler).Methods("GET")
@@ -99,5 +105,24 @@ func setupRoutes(router *mux.Router) {
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	json.NewEncoder(w).Encode(map[string]string{"data": "Hello World", "header": r.Header.Get("headkey")})
+
+	trueClients := 0
+	falseClients := 0
+	for _, client := range hub.clients {
+		if client {
+			trueClients++
+		} else {
+			falseClients++
+		}
+	}
+
+	socketMessage := []byte("hello")
+	hub.broadcast <- socketMessage
+
+	json.NewEncoder(w).Encode(map[string]string{
+		"data":   "Hello World",
+		"header": r.Header.Get("headkey"),
+		"true":   strconv.Itoa(trueClients),
+		"false":  strconv.Itoa(falseClients),
+	})
 }

@@ -32,6 +32,14 @@
                 return false;
             };
 
+            document.getElementById("cancel").onclick = function (e) {
+                e.preventDefault()
+                if (!conn) {
+                    return false;
+                }
+                conn.close()
+            };
+
             if (window["WebSocket"]) {
                 conn = new WebSocket("ws://" + document.location.host + "/ws");
                 conn.onclose = function (evt) {
@@ -98,6 +106,7 @@
     <div id="log"></div>
     <form id="form">
         <input type="submit" value="Send" />
+        <input type="button" value="Cancel" id="cancel" />
         <input type="text" id="msg" size="64" autofocus />
     </form>
 </body>
