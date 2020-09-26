@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -40,20 +41,25 @@ func main() {
 	router.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		serveWs(hub, w, r)
 	})
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/views/")))
+
+	fs := http.FileServer(http.Dir("./public/views/"))
+	router.PathPrefix("/chat/").Handler(http.StripPrefix("/chat/", fs))
 
 	router.Use(loggingMiddleware)
 	setupRoutes(router)
 
-	log.Fatal(
-		http.ListenAndServe(
-			":8080",
-			handlers.CORS(
-				handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
-				handlers.AllowedMethods([]string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"}),
-				handlers.AllowedOrigins([]string{"*"}),
-			)(router),
-		))
+	srv := &http.Server{
+		Handler: handlers.CORS(
+			handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"}),
+			handlers.AllowedMethods([]string{"GET", "POST", "PATCH", "DELETE", "OPTIONS"}),
+			handlers.AllowedOrigins([]string{"*"}))(router),
+		Addr: "127.0.0.1:8080",
+		// Good practice: enforce timeouts for servers you create!
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
+	log.Fatal(srv.ListenAndServe())
 }
 
 func setupRoutes(router *mux.Router) {
@@ -94,17 +100,4 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(map[string]string{"data": "Hello World", "header": r.Header.Get("headkey")})
-}
-
-func serveHome(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL)
-	if r.URL.Path != "/" {
-		http.Error(w, "Not found", http.StatusNotFound)
-		return
-	}
-	if r.Method != "GET" {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	http.ServeFile(w, r, "home.html")
 }
